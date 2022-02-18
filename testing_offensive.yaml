@@ -1,0 +1,64 @@
+---
+
+- hosts: all
+  become: false
+  tasks:
+
+    - name: Create "git" directory if it does not exist
+      tags: always, folder, dependencies
+      ansible.builtin.file:
+        path: /home/{{username}}/git
+        state: directory
+        mode: '0755'
+
+    - name: Clone SecLists repo into git folder
+      tags: offensive, wordlists, git
+      ansible.builtin.git:
+        repo: https://github.com/danielmiessler/SecLists
+        dest: /home/{{username}}/git/SecLists
+
+    - name: Clone John The Ripper repo into git folder
+      tags: offensive, hash, git
+      ansible.builtin.git:
+        repo: https://github.com/openwall/john
+        dest: /home/{{username}}/git/john
+
+    - name: Install JtR dependencies
+      tags: always, hash, dependencies
+      apt:
+        name:
+          - git
+          - build-essential
+          - libssl-dev
+          - zlib1g-dev
+          - yasm
+          - pkg-config
+          - libgmp-dev
+          - libpcap-dev
+          - libbz2-dev
+        state: latest
+      become: yes
+
+    - name: Compile John The Ripper from downloaded source
+      tags: offensive, hash, make
+      make:
+        chdir:
+
+    - name: Clone PEASS-ng repo into git folder
+      tags: offensive, escalation, git
+      ansible.builtin.git:
+        repo: https://github.com/carlospolop/PEASS-ng
+        dest: /home/{{username}}/git/PEASS-ng
+
+    - name: Clone hash-identifier repo into git folder
+      tags: offensive, hash, git
+      ansible.builtin.git:
+        repo: https://github.com/blackploit/hash-identifier
+        dest: /home/{{username}}/git/hash-identifier
+
+    - name: Clone Responder repo into git folder
+      tags: offensive, hash, git
+      ansible.builtin.git:
+        repo: https://github.com/SpiderLabs/Responder
+        dest: /home/{{username}}/git/Responder
+
