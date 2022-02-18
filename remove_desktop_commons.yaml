@@ -27,8 +27,8 @@
         - thunderbird
         - thunderbird-locale-fr
         - thunderbird-locale-en
-        - thunderbird-locale-us
-        - thunderbird-locale-uk
+        - thunderbird-locale-en-us
+        - thunderbird-locale-en-uk
         - vlc
         - transmission
         - telegram-desktop

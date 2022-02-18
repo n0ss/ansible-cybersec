@@ -4,11 +4,14 @@
   become: true
   tasks:
 
-  - name: Update APT cache
+  - name: APT update cache & upgrade distribution
+    tags: always, update, system
     apt:
       update_cache: yes
+      upgrade: dist
 
   - name: Install system tools (snapd, git, curl, gparted, neofetch, jdk/jre)
+    tags: system, dependencies
     apt:
       name:
         - snapd
@@ -20,23 +23,61 @@
         - default-jre
       state: latest
 
-  - name: Install desktop tools (firefox, thunderbird, vlc, )
+  - name: Install desktop clients (browsing, email, torrent)
+    tags: desktop, web, mail, torrent
     apt:
       name:
         - firefox
         - thunderbird
         - thunderbird-locale-fr
         - thunderbird-locale-en
-        - thunderbird-locale-us
-        - thunderbird-locale-uk
-        - vlc
+        - thunderbird-locale-en-gb
+        - thunderbird-locale-en-us
         - transmission
         - telegram-desktop
-        - audacity
       state: latest
 
-  - name: Install non-productive tools
+  - name: Install Audacity & VLC
+    tags: media
+    apt:
+      name:
+        - audacity
+        - vlc
+      state: latest
+
+  - name: Install text editors from snap with classic confinement
+    tags: editor, snap, classic
+    community.general.snap:
+      name:
+        - code
+        - atom
+        - sublime-text
+      classic: yes
+
+  - name: Install chatting softwares
+    tags: chat, privacy
+    apt:
+      name:
+        - telegram-desktop
+      state: latest
+
+  - name: Install Signal & WhatsApp from snap
+    tags: chat, privacy, snap
+    community.general.snap:
+      name:
+        - signal-desktop
+        - whatsapp-for-linux
+
+  - name: Install non-productive softwares from apt (Steam)
+    tags: games, fun
     apt:
       name:
         - steam
       state: latest
+
+  - name: Install non-productive softwares from snap (Discord & Spotify)
+    tags: fun, music, games
+    community.general.snap:
+      name:
+        - spotify
+        - discord

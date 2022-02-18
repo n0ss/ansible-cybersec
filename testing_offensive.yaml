@@ -23,7 +23,7 @@
         repo: https://github.com/openwall/john
         dest: /home/{{username}}/git/john
 
-    - name: Install JtR dependencies
+    - name: Install John The Ripper dependencies
       tags: always, hash, dependencies
       apt:
         name:
@@ -39,10 +39,26 @@
         state: latest
       become: yes
 
+    - name: Configure John The Ripper Makefile
+      ansible.builtin.script: /home/{{username}}/git/john/src/configure
+      args:
+        creates: /home/{{username}}/git/john/src/Makefile
+
     - name: Compile John The Ripper from downloaded source
       tags: offensive, hash, make
       make:
-        chdir:
+        chdir: /home/{{username}}/git/john/src
+        target: install
+        params:
+            NUM_THREADS: 4
+
+    - name: Create a symbolic link to JtR binaries
+      ansible.builtin.file:
+        src: /home/{{username}}/git/john/run
+        dest: /usr/local/bin
+        owner: '{{username}}'
+        group: '{{username}}'
+        state: link
 
     - name: Clone PEASS-ng repo into git folder
       tags: offensive, escalation, git
