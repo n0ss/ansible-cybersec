@@ -1,0 +1,99 @@
+---
+
+- hosts: all
+  become: true
+  tasks:
+
+  - name: Update APT cache
+    apt:
+      update_cache: yes
+
+  - name: Install Snap
+    apt:
+      name: snapd
+      state: latest
+
+  - name: Install Git
+    apt:
+      name: git
+      state: latest
+
+  - name: Install Curl
+    apt:
+      name: curl
+      state: latest
+
+  - name: Install GParted
+    apt:
+      name: gparted
+      state: latest
+
+  - name: Install Neofetch
+    apt:
+      name: neofetch
+      state: latest
+
+  - name: Install Java JDK Default
+    apt:
+      name: default-jdk
+      state: latest
+
+  - name: Install Java JRE Default
+    apt:
+      name: default-jre
+      state: latest
+
+  - name: Install Firefox
+    apt:
+      name: firefox
+      state: latest
+
+  - name: Install Thunderbird
+    apt:
+      name: thunderbird
+      state: latest
+
+  - name: Install Thunderbird Locale (FR)
+    apt:
+      name: thunderbird-locale-fr
+      state: latest
+
+  - name: Install Thunderbird Locale (ENG)
+    apt:
+      name: thunderbird-locale-en
+      state: latest
+
+  - name: Install Thunderbird Locale (ENG/US)
+    apt:
+      name: thunderbird-locale-en-us
+      state: latest
+
+  - name: Install Thunderbird Locale (ENG/UK)
+    apt:
+      name: thunderbird-locale-en
+      state: latest
+
+  - name: Install VLC
+    apt:
+      name: vlc
+      state: latest
+
+  - name: Install Transmission
+    apt:
+      name: transmission
+      state: latest
+
+  - name: Install Audacity
+    apt:
+      name: audacity
+      state: latest
+
+  - name: Install Telegram
+    apt:
+      name: telegram-desktop
+      state: latest
+
+  - name: Install Steam
+    apt:
+      name: steam
+      state: latest
