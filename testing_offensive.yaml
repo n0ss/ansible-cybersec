@@ -40,25 +40,25 @@
       become: yes
 
     - name: Configure John The Ripper Makefile
-      ansible.builtin.script: /home/{{username}}/git/john/src/configure
+      tags: offensive, hash, script
+      ansible.builtin.shell:
       args:
-        creates: /home/{{username}}/git/john/src/Makefile
+        cmd: /bin/bash /home/{{username}}/git/john/src/configure > ansible_configure.log
+        creates: Makefile
+        chdir: /home/{{username}}/git/john/src/
 
-    - name: Compile John The Ripper from downloaded source
+    - name: Compile John The Ripper from source (make -s clean)
       tags: offensive, hash, make
       make:
         chdir: /home/{{username}}/git/john/src
-        target: install
+        target: clean
+
+    - name: Compile John The Ripper from source (make -sj4)
+      tags: offensive, hash, make
+      make:
+        chdir: /home/{{username}}/git/john/src
         params:
             NUM_THREADS: 4
-
-    - name: Create a symbolic link to JtR binaries
-      ansible.builtin.file:
-        src: /home/{{username}}/git/john/run
-        dest: /usr/local/bin
-        owner: '{{username}}'
-        group: '{{username}}'
-        state: link
 
     - name: Clone PEASS-ng repo into git folder
       tags: offensive, escalation, git
@@ -73,8 +73,8 @@
         dest: /home/{{username}}/git/hash-identifier
 
     - name: Clone Responder repo into git folder
-      tags: offensive, hash, git
+      tags: offensive, responder, git
       ansible.builtin.git:
-        repo: https://github.com/SpiderLabs/Responder
+        repo: https://github.com/lgandx/Responder
         dest: /home/{{username}}/git/Responder
 
