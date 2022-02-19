@@ -4,11 +4,19 @@ This repository was created to provide ansible configurations files to automatic
 
 This could be a good way to get into Ansible and Hacking at the same time.
 
-# Recommendations
+# Recommendations (Optionnal)
+
+It is highly recommended you should use a private/public key pair in order to make SSH connections to your infrastructure. To use Ansible with an SSH keypair, you should use a dedicated key pair for this purpose.
 
 ## SSH Keys
 
-If is it not the case already, you should use a private/public key pair in order to make SSH connections to your infrastructure. To use Ansible with an SSH keypair, you should use a dedicated key for this purpose.
+### Dependencies
+
+First, you'll to have an OpenSSH server running on your target, if not, install with :
+
+<code> sudo apt install openssh-server -y </code>
+
+### Generaring new key pair
 
 Recommended options for generating keys :
 
@@ -20,20 +28,22 @@ or
 
 *It is recommended to change the default path proposed by ssh-keygen in order to improve security*
 
-After which you will need to export the public key of your newly created keypair to the specific host(s) on which you want to deploy with Ansible
+### Exporting a public key to your target host
+
+You will need to export the public key of your newly created keypair to the specific host(s) on which you want to deploy with Ansible
 
 <code> ssh-copy-id -i /path/to/your/keypair.pub IP.of.the.target </code>
 
-## Bootstraping the OS
+# Bootstraping the OS
 
 
-## Install common desktop softwares
+# Install common desktop softwares
 
 
-## Configure common desktop softwares
+# Configure common desktop softwares
 
 
-## Install pentesting dependencies
+# Install pentesting dependencies
 
 
-## Install pentesting softwares
+# Install pentesting softwares
