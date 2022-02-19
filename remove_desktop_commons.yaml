@@ -4,19 +4,6 @@
   become: true
   tasks:
 
-  - name: Remove system tools (snapd, git, curl, gparted, neofetch, jdk/jre)
-    tags: system, dependencies
-    apt:
-      name:
-        - snapd
-        - git
-        - curl
-        - gparted
-        - neofetch
-        - default-jdk
-        - default-jre
-      state: absent
-
   - name: Remove desktop clients (browsing, email, torrent)
     tags: desktop, web, mail, torrent
     apt:

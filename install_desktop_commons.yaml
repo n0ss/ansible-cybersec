@@ -21,6 +21,7 @@
         - neofetch
         - default-jdk
         - default-jre
+        - openssh-server
       state: latest
 
   - name: Install desktop clients (browsing, email, torrent)
