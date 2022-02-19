@@ -4,11 +4,8 @@
   become: true
   tasks:
 
-  - name: Update APT cache
-    apt:
-      update_cache: yes
-
-  - name: Install system tools (snapd, git, curl, gparted, neofetch, jdk/jre)
+  - name: Remove system tools (snapd, git, curl, gparted, neofetch, jdk/jre)
+    tags: system, dependencies
     apt:
       name:
         - snapd
@@ -20,23 +17,68 @@
         - default-jre
       state: absent
 
-  - name: Install desktop tools (firefox, thunderbird, vlc, )
+  - name: Remove desktop clients (browsing, email, torrent)
+    tags: desktop, web, mail, torrent
     apt:
       name:
         - firefox
         - thunderbird
         - thunderbird-locale-fr
         - thunderbird-locale-en
+        - thunderbird-locale-en-gb
         - thunderbird-locale-en-us
-        - thunderbird-locale-en-uk
-        - vlc
         - transmission
         - telegram-desktop
-        - audacity
       state: absent
 
-  - name: Install non-productive tools
+  - name: Remove Audacity & VLC
+    tags: media
+    apt:
+      name:
+        - audacity
+        - vlc
+      state: absent
+
+  - name: Remove text editors from snap with classic confinement
+    tags: editor, snap, classic
+    community.general.snap:
+      name:
+        - code
+        - atom
+        - sublime-text
+      state: absent
+
+  - name: Remove chatting softwares
+    tags: chat, privacy
+    apt:
+      name:
+        - telegram-desktop
+      state: absent
+
+  - name: Remove Signal & WhatsApp from snap
+    tags: chat, privacy, snap
+    community.general.snap:
+      name:
+        - signal-desktop
+        - whatsapp-for-linux
+      state: absent
+
+  - name: Remove non-productive softwares from apt (Steam)
+    tags: games, fun
     apt:
       name:
         - steam
       state: absent
+
+  - name: Remove non-productive softwares from snap (Discord & Spotify)
+    tags: fun, music, games
+    community.general.snap:
+      name:
+        - spotify
+        - discord
+      state: absent
+
+  - name: Remove dependencies that are no longer required
+    tags: always, update, system
+    apt:
+      autoremove: yes
