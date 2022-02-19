@@ -52,6 +52,14 @@ Type the password of the remote host when asked, then logging to the host to ver
 
 <code> cat ~/.ssh/authorized_keys </code>
 
+### Using personal key to clone Github repositories
+
+You can also use your public key to clone github repositories.
+
+***Account/Preferences/SSH & GPG keys/New SSH Key/Paste your public key***
+
+This will allow you to connect in a secure manner to Github.
+
 ### Generating second key pair for Ansible
 
 Recommended options for generating keys :
